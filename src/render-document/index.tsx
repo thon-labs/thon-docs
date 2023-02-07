@@ -82,6 +82,7 @@ const RenderDocument: RenderDocumentType = ({
   function renderMarkdownPiece(document: DocumentPiece, index: number) {
     return (
       <div
+        className="thon-html"
         key={`${document.type}_${index}`}
         dangerouslySetInnerHTML={{ __html: document.value as string }}
       />
@@ -90,7 +91,10 @@ const RenderDocument: RenderDocumentType = ({
 
   function renderReactComponent(document: DocumentPiece, index: number) {
     return (
-      <div key={`${document.type}_${index}`}>
+      <div
+        className={`thon-component thon-${document.module.toLowerCase()}`}
+        key={`${document.type}_${index}`}
+      >
         {modules[document.module][document.component]()}
       </div>
     );
