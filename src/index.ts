@@ -4,7 +4,7 @@
  * https://github.com/thon-labs/thon-docs
  */
 
-import ThonProvider from './providers/thon-provider';
-import useThon from './hooks/use-thon';
+import ThonDocsProvider from './providers/thon-docs-provider';
+import useThonDocs from './hooks/use-thon-docs';
 
-export { ThonProvider, useThon };
+export { ThonDocsProvider, useThonDocs };

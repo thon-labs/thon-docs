@@ -1,4 +1,4 @@
-export function withThon(nextConfig) {
+export function withThonDocs(nextConfig) {
   const userWebpack = nextConfig.webpack || ((x) => x);
 
   return {

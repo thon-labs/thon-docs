@@ -3,12 +3,12 @@ import renderDocumentWrapper, {
   RenderDocumentType,
 } from '../../render-document';
 
-export interface IThonContext {
+export interface IThonDocsContext {
   RenderDocument: RenderDocumentType;
 }
 
 /* istanbul ignore next */
-export const ThonContext = React.createContext<IThonContext>({
+export const ThonDocsContext = React.createContext<IThonDocsContext>({
   RenderDocument: null,
 });
 
@@ -17,14 +17,14 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const ThonProvider: React.FC<Props> = ({ modules, children }) => {
+export const ThonDocsProvider: React.FC<Props> = ({ modules, children }) => {
   const RenderDocument = renderDocumentWrapper({ modules });
 
   return (
-    <ThonContext.Provider value={{ RenderDocument }}>
+    <ThonDocsContext.Provider value={{ RenderDocument }}>
       {children}
-    </ThonContext.Provider>
+    </ThonDocsContext.Provider>
   );
 };
 
-export default ThonProvider;
+export default ThonDocsProvider;
