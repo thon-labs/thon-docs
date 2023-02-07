@@ -27,19 +27,19 @@ It's simple to start using Thon, just need to follow a few steps.
 Start installing the Thon CLI, with this package you will be able to build the files.
 
 ```
-npm install -g @thon/cli
+npm install -g @thonlabs/cli
 ```
 
 Then install the thon docs to be possible use the modules.
 
 ```
-npm i @thon/docs
+npm i @thonlabs/docs
 ```
 
 or using yarn:
 
 ```
-yarn add @thon/docs
+yarn add @thonlabs/docs
 ```
 
 ## Initialize
@@ -61,7 +61,7 @@ thon init --root="my-root-folder"
 On the root component of your app add the following provider and modules:
 
 ```jsx
-import { ThonProvider } from '@thon/docs';
+import { ThonProvider } from '@thonlabs/docs';
 import { modules } from '../.thon';
 
 function App({ children }) {
@@ -72,7 +72,7 @@ function App({ children }) {
 and you can render the markdown using the `RenderDocument`:
 
 ```jsx
-import { useThon } from '@thon/docs';
+import { useThon } from '@thonlabs/docs';
 
 const buttonDoc = require('../.thon/button/button.md');
 
@@ -90,7 +90,7 @@ After all, just run your application normally.
 If you're using NextJS you need to update the `next.config.js` file to use Thon's plugin, basically needs only to update similar to the example below:
 
 ```javascript
-const { withThon } = require('@thon/docs/build/next');
+const { withThon } = require('@thonlabs/docs/build/next');
 
 const nextConfig = { ... };
 
