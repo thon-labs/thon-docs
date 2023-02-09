@@ -43,36 +43,51 @@ const RenderDocument: RenderDocumentType = ({
 
       // Locate thon blocks
       const componentsCount = rawMarkdown.match(/```thon/g)?.length || 0;
-      const componentKey = '```thon';
 
       let pieces: DocumentPiece[] = [];
 
-      for (let i = 0; i < componentsCount; i++) {
-        const startComponentIndex =
-          rawMarkdown.indexOf(componentKey) + componentKey.length;
-        const endComponentIndex =
-          startComponentIndex +
-          rawMarkdown.substring(startComponentIndex).indexOf('```');
+      if (componentsCount > 0) {
+        const [componentOpenKey, componentCloseKey] = ['```thon', '```'];
 
-        const componentData = JSON.parse(
-          rawMarkdown.substring(startComponentIndex, endComponentIndex).trim()
-        );
+        // Separate the React component and markdown blocks
+        for (let i = 0; i < componentsCount; i++) {
+          const startComponentIndex =
+            rawMarkdown.indexOf(componentOpenKey) + componentOpenKey.length;
+          const endComponentIndex =
+            startComponentIndex +
+            rawMarkdown
+              .substring(startComponentIndex)
+              .indexOf(componentCloseKey);
 
+          const componentData = JSON.parse(
+            rawMarkdown.substring(startComponentIndex, endComponentIndex).trim()
+          );
+
+          pieces.push({
+            type: 'markdown',
+            value: marked.parse(
+              rawMarkdown
+                .substring(0, startComponentIndex - componentOpenKey.length)
+                .trim(),
+              null,
+              null
+            ),
+          } as unknown as DocumentPiece);
+          pieces.push(componentData);
+
+          rawMarkdown = rawMarkdown
+            .substring(
+              endComponentIndex + componentCloseKey.length,
+              rawMarkdown.length
+            )
+            .trim();
+        }
+      } else {
+        // Keep only the markdown
         pieces.push({
           type: 'markdown',
-          value: marked.parse(
-            rawMarkdown
-              .substring(0, startComponentIndex - componentKey.length)
-              .trim(),
-            null,
-            null
-          ),
+          value: marked.parse(rawMarkdown, null, null),
         } as unknown as DocumentPiece);
-        pieces.push(componentData);
-
-        rawMarkdown = rawMarkdown
-          .substring(endComponentIndex + 3, rawMarkdown.length)
-          .trim();
       }
 
       setDocumentPieces(pieces);
