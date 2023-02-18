@@ -1,6 +1,8 @@
 import React from 'react';
 import { marked } from 'marked';
 import frontMatter from 'front-matter';
+import hljs from 'highlight.js';
+import classNames from 'classnames';
 
 type DocumentPiece = {
   type: 'react' | 'html' | 'markdown';
@@ -81,6 +83,14 @@ const RenderDocument: RenderDocumentType = ({
               rawMarkdown.length
             )
             .trim();
+
+          // Last part of markdown
+          if (i == componentsCount - 1) {
+            pieces.push({
+              type: 'markdown',
+              value: marked.parse(rawMarkdown.trim(), null, null),
+            } as unknown as DocumentPiece);
+          }
         }
       } else {
         // Keep only the markdown
@@ -93,6 +103,12 @@ const RenderDocument: RenderDocumentType = ({
       setDocumentPieces(pieces);
     })();
   }, [markdown]);
+
+  React.useEffect(() => {
+    document.querySelectorAll('pre code').forEach((el) => {
+      hljs.highlightElement(el as HTMLElement);
+    });
+  }, [documentPieces]);
 
   function renderMarkdownPiece(document: DocumentPiece, index: number) {
     return (
@@ -136,7 +152,11 @@ function renderDocumentWrapper({
   modules: any;
 }): RenderDocumentType {
   return (props: RenderDocumentProps) => {
-    return <RenderDocument {...props} modules={modules} />;
+    const className = classNames('document', props.className);
+
+    return (
+      <RenderDocument {...props} className={className} modules={modules} />
+    );
   };
 }
 
