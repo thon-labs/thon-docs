@@ -11,7 +11,7 @@
   "scripts": {
     "compile": "tsc -p .",
     "build": "rm -rf dist && yarn compile",
-    "postbuild": "gulp postBuild && cp package.json dist && cp README.md dist",
+    "postbuild": "gulp postBuild && cp package.json dist && cp README.md dist && cp -R src/styles dist",
     "package": "rimraf *.tgz && cd dist && yarn pack && cd ../ && mv dist/*.tgz ./",
     "lint": "TIMING=1 eslint src/**/*.ts* --fix",
     "clean": "rm -rf dist",
@@ -31,12 +31,12 @@
     "eslint-config-custom": "*",
     "glob": "^8.0.3",
     "gulp": "^4.0.2",
-    "gulp-remove-empty-lines": "^0.1.0",
+    "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
     "jest": "^29.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "through2": "^4.0.2",
+    "sass": "^1.58.3",
     "ts-jest": "^29.0.3",
     "tsconfig": "*",
     "typescript": "^4.5.2"
@@ -44,6 +44,7 @@
   "dependencies": {
     "classnames": "^2.3.2",
     "front-matter": "^4.0.2",
+    "highlight.js": "^11.7.0",
     "marked": "^4.2.3"
   }
 }
